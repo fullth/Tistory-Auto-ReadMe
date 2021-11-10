@@ -1,13 +1,26 @@
 package com.tistory.fullth;
 
+import jdk.nashorn.internal.objects.annotations.Getter;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class Tistory {
+class TestTistoryApi {
+
+    /**
+     * tistory.autoReadMe.appId=72b5e8874f2b21c2100221ee966eb861
+     * tistory.autoReadMe.secret=72b5e8874f2b21c2100221ee966eb86183dc36ffb47ec29de71586aa2df47adb41f4866a
+     * tistory.autoReadMe.serviceUrl=http://fullth.readme.fullth
+     * */
+    private static final String client_id = "72b5e8874f2b21c2100221ee966eb861";
+    private static final String client_secret = "72b5e8874f2b21c2100221ee966eb86183dc36ffb47ec29de71586aa2df47adb41f4866a";
+    private static final String redirect_uri = "https://fullth.tistory.com/";
 
     /**
      * https://www.tistory.com/oauth/authorize?
@@ -18,9 +31,6 @@ public class Tistory {
      * */
     @Test
     void getAuthorizeCode() {
-        String client_id = "";
-        String redirect_uri = "";
-
         String apiURL = "https://www.tistory.com/oauth/authorize?"
                 + "client_id=" + client_id + "&redirect_uri=" + redirect_uri + "&response_type=code";
 
@@ -37,10 +47,7 @@ public class Tistory {
      * */
     @Test
     void getAccessToken() {
-        String client_id = "";
-        String client_secret = "";
-        String redirect_uri = "";
-        String code = "";
+        String code = "af0f88d687db2cdc9c6b9bf48b8c70829657c3edbf452b20b15af171092c4658cc003b9b";
 
         String apiURL = "https://www.tistory.com/oauth/access_token?"
                 + "client_id=" + client_id
@@ -61,9 +68,9 @@ public class Tistory {
      * */
     @Test
     void getPosts() {
-        String access_token = "";
+        String access_token = "8f4c1b88ec93951d8e6254f035b16d86_1f554d16f931e793d92facb24fff88ee";
         String output = "UTF-8";
-        String blogName = "";
+        String blogName = "fullth";
         String page = "1";
 
         String apiURL = "https://www.tistory.com/apis/post/list?"
