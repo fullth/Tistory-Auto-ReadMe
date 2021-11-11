@@ -11,4 +11,7 @@ public class Properties {
     private String clientId;
     private String clientSecret;
     private String redirectUrl;
+    private String code;
+    private String token;
+    private String blogName;
 }
