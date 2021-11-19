@@ -8,12 +8,12 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-@Service("tistoryAuthService")
-public class TistoryAuthServiceImpl implements TistoryAuthService {
+@Service("authService")
+public class AuthServiceImpl implements AuthService {
 
     private final Properties properties;
 
-    public TistoryAuthServiceImpl(Properties properties) {
+    public AuthServiceImpl(Properties properties) {
         this.properties = properties;
     }
 

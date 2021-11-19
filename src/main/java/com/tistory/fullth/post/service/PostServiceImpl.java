@@ -1,12 +1,21 @@
 package com.tistory.fullth.post.service;
 
 import com.tistory.fullth.post.config.Properties;
+import com.tistory.fullth.post.dto.PostRequestDTO;
+import com.tistory.fullth.post.dto.PostResponseDTO;
+import com.tistory.fullth.post.entity.Post;
+import com.tistory.fullth.post.entity.PostRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -15,18 +24,22 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
-@Service("tistoryPostService")
-public class TistoryPostServiceImpl implements TistoryPostService{
+@Service("postService")
+public class PostServiceImpl implements PostService {
 
     private final Properties properties;
 
-    private final TistoryAuthService tistoryAuthService;
+    private final AuthService authService;
 
-    public TistoryPostServiceImpl(Properties properties,
-                                  TistoryAuthService tistoryAuthService) {
+    private final PostRepository postRepository;
+
+    public PostServiceImpl(Properties properties,
+                           AuthService authService, PostRepository postRepository) {
         this.properties = properties;
-        this.tistoryAuthService = tistoryAuthService;
+        this.authService = authService;
+        this.postRepository = postRepository;
     }
 
     @Override
@@ -42,7 +55,7 @@ public class TistoryPostServiceImpl implements TistoryPostService{
                 + "&blogName=" + blogName
                 + "&page=" + page;
 
-        return tistoryAuthService.requestApi(apiURL);
+        return authService.requestApi(apiURL);
     }
 
     @Override
@@ -104,9 +117,17 @@ public class TistoryPostServiceImpl implements TistoryPostService{
     }
 
     @Override
-    public void insertPostList() {
-
+    public List<PostResponseDTO> findAll() {
+        Sort sort = Sort.by(Direction.DESC, "id");
+        List<Post> list = postRepository.findAll(sort);
+        return list.stream().map(PostResponseDTO::new).collect(Collectors.toList());
     }
 
+    @Transactional
+    @Override
+    public long save(final PostRequestDTO params) {
+        Post entity = postRepository.save(params.toEntity());
+        return entity.getId();
+    }
 
 }

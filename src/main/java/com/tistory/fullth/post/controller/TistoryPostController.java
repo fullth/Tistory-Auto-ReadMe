@@ -1,44 +1,38 @@
 package com.tistory.fullth.post.controller;
 
-import com.tistory.fullth.post.service.TistoryAuthService;
-import com.tistory.fullth.post.service.TistoryPostService;
+import com.tistory.fullth.post.dto.PostRequestDTO;
+import com.tistory.fullth.post.service.AuthService;
+import com.tistory.fullth.post.service.PostService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import org.springframework.web.bind.annotation.*;
 import org.xml.sax.SAXException;
 
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 @Controller
 @RequestMapping("/api/v1/tistory/post")
 public class TistoryPostController {
 
-    private final TistoryPostService tistoryPostService;
-    private final TistoryAuthService tistoryAuthService;
+    private final PostService postService;
+    private final AuthService authService;
 
-    public TistoryPostController(TistoryPostService tistoryPostService, TistoryAuthService tistoryAuthService) {
-        this.tistoryPostService = tistoryPostService;
-        this.tistoryAuthService = tistoryAuthService;
+    public TistoryPostController(PostService postService, AuthService authService) {
+        this.postService = postService;
+        this.authService = authService;
     }
 
     @GetMapping("/list")
     public @ResponseBody String getPostList() {
-        String postList = tistoryPostService.getPostList();
+        String postList = postService.getPostList();
         return postList;
     }
 
     @GetMapping("/xml")
     public void getParseXML() throws ParserConfigurationException, IOException, SAXException {
+    }
+
+    @PostMapping("/post")
+    public Long save(@RequestBody final PostRequestDTO params) {
+        return postService.save(params);
     }
 }

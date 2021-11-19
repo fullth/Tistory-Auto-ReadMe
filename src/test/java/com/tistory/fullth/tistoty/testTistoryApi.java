@@ -1,4 +1,4 @@
-package com.tistory.fullth;
+package com.tistory.fullth.tistoty;
 
 import jdk.nashorn.internal.objects.annotations.Getter;
 import org.junit.jupiter.api.Test;
@@ -11,7 +11,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-class TestTistoryApi {
+class testTistoryApi {
 
     private static final String client_id = "";
     private static final String client_secret = "";
