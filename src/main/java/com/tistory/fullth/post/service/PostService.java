@@ -28,7 +28,7 @@ public class PostService {
         String access_token = properties.getToken();
         String output = "UTF-8";
         String blogName = properties.getBlogName();
-        String page = "5";
+        int page = 1;
 
         String apiURL = "https://www.tistory.com/apis/post/list?"
                 + "access_token=" + access_token
@@ -39,11 +39,10 @@ public class PostService {
         return authService.requestApi(apiURL);
     }
 
-    public String getPostListURL() {
+    public String getPostListURL(int page) {
         String access_token = properties.getToken();
         String output = "UTF-8";
         String blogName = properties.getBlogName();
-        String page = "1";
 
         String apiURL = "https://www.tistory.com/apis/post/list?"
                 + "access_token=" + access_token
@@ -54,8 +53,8 @@ public class PostService {
         return apiURL;
     }
 
-    public Element xmlParser() {
-        String url = getPostListURL();
+    public Element xmlParser(int page) {
+        String url = getPostListURL(page);
 
         Document documentInfo = null;
         try {
@@ -72,7 +71,7 @@ public class PostService {
     }
 
     public int getTotalPageCount() {
-        Element root = xmlParser();
+        Element root = xmlParser(1);
 
         NodeList itemList = root.getElementsByTagName("item");
 
@@ -84,8 +83,8 @@ public class PostService {
         return totalCount;
     }
 
-    public List<Map<String, String>> parseTistoryPostList() {
-        Element root = xmlParser(); // tistory
+    public List<Map<String, String>> parseTistoryPostList(int page) {
+        Element root = xmlParser(page); // tistory
 
         NodeList nodeList = root.getElementsByTagName("post");
 

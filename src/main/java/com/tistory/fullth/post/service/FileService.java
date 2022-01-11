@@ -17,44 +17,29 @@ public class FileService {
         this.postService = postService;
     }
 
-    public void createNewTistoryReadMeFile() throws IOException {
-        String fileName = "";
-        if(fileName == null || fileName == "") {
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
-            Date nowdate = new Date();
-            String dateString = formatter.format(nowdate);
-            fileName = "tistory_post_list.md";
-        }
+    public void createNewTistoryReadMeFile(int page) throws IOException {
+        String fileName = "ReadMe.md";
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
 
-        File file = new File("D:/TEST/" + fileName);
+        BufferedWriter bw = new BufferedWriter(
+                new FileWriter("D:/Tistory/Tistory-Auto-ReadMe/" + fileName, true));
 
-        Writer out = null;
-        out = new BufferedWriter(
-                new OutputStreamWriter(
-                        new FileOutputStream(file), "UTF-8"
-                )
-        );
+        PrintWriter pw = new PrintWriter(bw, true);
 
-        StringBuilder sb = new StringBuilder();
-        sb.append("## _블로그 글 목록_ \n\n" );
+        List<Map<String, String>> postList = postService.parseTistoryPostList(page);
 
-        List<Map<String, String>> postList = postService.parseTistoryPostList();
-
-        int i = 1;
         for (Map post : postList) {
-            sb.append(i + ": [");
-            sb.append(post.get("title"));
-            sb.append("]");
-            sb.append("(");
-            sb.append(post.get("postUrl"));
-            sb.append(")");
+            pw.append("[");
+            pw.append(post.get("title").toString());
+            pw.append("]");
+            pw.append("(");
+            pw.append(post.get("postUrl").toString());
+            pw.append(")");
 
-            sb.append("\n\n");
-            i++;
+            pw.append("\n\n");
         }
 
-        out.write(sb.toString());
-        out.flush();
-        out.close();
+        pw.flush();
+        pw.close();
     }
 }

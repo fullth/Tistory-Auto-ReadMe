@@ -1,6 +1,5 @@
 package com.tistory.fullth;
 
-import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;

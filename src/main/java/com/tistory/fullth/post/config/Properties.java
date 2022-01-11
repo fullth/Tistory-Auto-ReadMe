@@ -14,4 +14,5 @@ public class Properties {
     private String code;
     private String token;
     private String blogName;
+    private int totalPage;
 }

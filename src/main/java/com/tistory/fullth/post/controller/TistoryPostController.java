@@ -2,12 +2,9 @@ package com.tistory.fullth.post.controller;
 
 import com.tistory.fullth.post.service.AuthService;
 import com.tistory.fullth.post.service.PostService;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
-@Controller
+@RestController
 @RequestMapping("/api/v1/tistory/post")
 
 public class TistoryPostController {
