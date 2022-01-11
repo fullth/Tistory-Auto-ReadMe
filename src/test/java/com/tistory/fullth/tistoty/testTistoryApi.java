@@ -2,6 +2,7 @@ package com.tistory.fullth.tistoty;
 
 import com.tistory.fullth.post.service.FileService;
 import com.tistory.fullth.post.service.PostService;
+import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -39,7 +40,7 @@ class testTistoryApi {
      *   &state={state-param}
      * */
     @Test
-    @Disabled
+    @Ignore
     void getAuthorizeCode() {
         String apiURL = "https://www.tistory.com/oauth/authorize?"
                 + "client_id=" + client_id + "&redirect_uri=" + redirect_uri + "&response_type=code";
@@ -57,7 +58,7 @@ class testTistoryApi {
      *   &grant_type=authorization_code
      * */
     @Test
-    @Disabled
+    @Ignore
     void getAccessToken() {
         String code = "";
 
@@ -79,7 +80,7 @@ class testTistoryApi {
      *   &page={page-number}
      * */
     @Test
-    @Disabled
+    @Ignore
     void getPosts() {
         String access_token = "";
         String output = "UTF-8";
@@ -96,12 +97,14 @@ class testTistoryApi {
     }
 
     @Test
+    @Ignore
     public void testParseTistoryPostList() {
         List postList = postService.parseTistoryPostList(1);
         LOGGER.info(postList.toString());
     }
 
     @Test
+    @Ignore
     public void testCreateNewTistoryReadMeFile() throws IOException {
         int beforeFileWriteTotalCount = 0;
         LOGGER.info("Before Total Page Count ::: " + String.valueOf(beforeFileWriteTotalCount));
@@ -129,6 +132,7 @@ class testTistoryApi {
     }
 
     @Test
+    @Ignore
     public void testGetTotalTistoryPostCount() {
         int totalCount = postService.getTotalPageCount();
         LOGGER.info("Total Page Count ::: " + String.valueOf(totalCount));
